@@ -23,11 +23,17 @@ jobs:
       - name: Test release
         run: |
           python3 -m venv env
+          echo here1!
           source env/bin/activate
+          echo here2!
           pip install -r dev_requirements.txt
+          echo here3!
           pip install twine
+          echo here4!
           pip install wheel setuptools
+          echo here5!
           python setup.py sdist bdist_wheel
+          echo here6!
           ls dist
           pip install dist/dbt_presto-*-py3-none-any.whl
           pip install dist/dbt-presto-*.tar.gz
