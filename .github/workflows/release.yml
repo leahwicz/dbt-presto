@@ -7,7 +7,7 @@ on:
   
 # release version number that must be updated for each release
 env:
-  version_number: '0.20.0RC7'
+  version_number: '0.20.1RC1'
 
 jobs:
   Bump_Version:
