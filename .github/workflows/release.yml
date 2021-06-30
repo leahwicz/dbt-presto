@@ -7,7 +7,7 @@ on:
   
 # release version number that must be updated for each release
 env:
-  version_number: '0.20.1RC1'
+  version_number: '0.20.1RC2'
 
 jobs:
   Bump_Version:
@@ -50,6 +50,7 @@ jobs:
 
       - name: Test release
         run: |
+          git log -1
           python3 -m venv env
           source env/bin/activate
           pip install -r dev_requirements.txt
