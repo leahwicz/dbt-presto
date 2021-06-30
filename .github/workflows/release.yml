@@ -10,7 +10,7 @@ env:
   version_number: '0.20.0rc1'
 
 jobs:
-  Bump Version:
+  Bump_Version:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Python
