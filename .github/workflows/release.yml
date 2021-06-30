@@ -11,6 +11,7 @@ env:
 
 jobs:
   Bump_Version:
+    name: 'Bump Version'
     runs-on: ubuntu-latest
     steps:
       - name: Setup Python
@@ -83,7 +84,7 @@ jobs:
   
   Tag:
     runs-on: ubuntu-latest
-    needs: Build
+    needs: Release
     steps:
       - uses: actions/checkout@v2
 
