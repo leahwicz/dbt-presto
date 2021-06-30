@@ -27,6 +27,7 @@ jobs:
           pip install -r dev_requirements.txt
           bumpversion --config-file .bumpversion-dbt.cfg patch --new-version ${{env.version_number}}
           bumpversion --config-file .bumpversion.cfg patch --new-version ${{env.version_number}} --allow-dirty
+          git status
 
       - name: Commit version bump
         uses: EndBug/add-and-commit@v7
