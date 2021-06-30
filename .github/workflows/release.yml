@@ -22,6 +22,8 @@ jobs:
 
       - name: Bump
         run: |
+          pwd
+          ls
           python3 -m venv env
           source env/bin/activate
           bumpversion --config-file .bumpversion-dbt.cfg patch --new-version ${{env.version_number}}
@@ -30,6 +32,7 @@ jobs:
           
   build:
     runs-on: ubuntu-latest
+    needs: bumpVersion
     steps:
       - name: Setup Python
         uses: actions/setup-python@v2.2.2
