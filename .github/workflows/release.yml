@@ -20,8 +20,13 @@ jobs:
           
       - uses: actions/checkout@v2
 
-      - name: Test release
+      - name: Test release        
+        env:
+          IS_PRERELEASE2: ${{ contains(env.version_number, 'rc') }}
+          IS_PRERELEASE: ${{ contains(env.version_number, 'rc') ||  contains(env.version_number, 'b') }}
         run: |
+          echo Duh $IS_PRERELEASE
+          echo Duh2 $IS_PRERELEASE2
           python3 -m venv env
           source env/bin/activate
           pip install -r dev_requirements.txt
