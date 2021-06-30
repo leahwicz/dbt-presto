@@ -7,7 +7,7 @@ on:
   
 # release version number that must be updated for each release
 env:
-  version_number: '0.19.6'
+  version_number: '0.19.7'
 
 jobs:          
   Test:
@@ -63,18 +63,19 @@ jobs:
       - name: Create GitHub release
         uses: actions/create-release@v1
         env:
+          IS_PRERELEASE: ${{ contains(${{env.version_number}}, 'rc') ||  ontains(${{env.version_number}}, 'b') }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: v${{env.version_number}}
           release_name: dbt-presto v${{env.version_number}}
           body: |
-            This is a patch release tracking [dbt-core v0.19.2](https://github.com/fishtown-analytics/dbt/releases/tag/v0.19.2).
+            This is a patch release tracking [dbt-core v${{env.version_number}}](https://github.com/fishtown-analytics/dbt/releases/tag/v${{env.version_number}}).
 
             ```sh
             $ pip install dbt-presto==${{env.version_number}}
             ```
           draft: false
-          prerelease: false
+          prerelease: $IS_PRERELEASE
           
   PypiRelease:
     name: Pypi release
