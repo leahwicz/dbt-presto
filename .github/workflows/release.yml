@@ -72,7 +72,8 @@ jobs:
           python-version: '3.8'
           
       - uses: actions/checkout@v2
-        ref: v${{env.version_number}}
+        with:
+          ref: v${{env.version_number}}
       
       - name: Release to pypi
         run: |
