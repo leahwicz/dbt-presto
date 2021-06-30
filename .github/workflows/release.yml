@@ -7,7 +7,7 @@ on:
   
 # release version number that must be updated for each release
 env:
-  version_number: '0.19.5'
+  version_number: '0.19.6'
 
 jobs:          
   Test:
@@ -59,6 +59,22 @@ jobs:
           author_email: 'leah.antkiewicz@fishtownanalytics.com'
           message: 'Bumping version to ${{env.version_number}}'
           tag: v${{env.version_number}}
+          
+      - name: Create GitHub release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: v${{env.version_number}}
+          release_name: dbt-presto v${{env.version_number}}
+          body: |
+            This is a patch release tracking [dbt-core v0.19.2](https://github.com/fishtown-analytics/dbt/releases/tag/v0.19.2).
+
+            ```sh
+            $ pip install dbt-presto==${{env.version_number}}
+            ```
+          draft: false
+          prerelease: false
           
   PypiRelease:
     name: Pypi release
