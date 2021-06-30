@@ -7,7 +7,7 @@ on:
   
   # release version number that must be updated for each release
 env:
-  version_number: '0.20.0RC4'
+  version_number: '0.20.0RC5'
 
 jobs:
   Bump_Version:
@@ -34,6 +34,7 @@ jobs:
         with:
           author_name: 'Leah Antkiewicz'
           author_email: 'leah.antkiewicz@fishtownanalytics.com'
+          message: 'Bumping version to ${{env.version_number}}'
           
   Build:
     runs-on: ubuntu-latest
