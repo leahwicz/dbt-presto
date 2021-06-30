@@ -7,7 +7,7 @@ on:
   
 # release version number that must be updated for each release
 env:
-  version_number: '0.19.4'
+  version_number: '0.19.5'
 
 jobs:          
   Test:
@@ -25,17 +25,14 @@ jobs:
           python3 -m venv env
           source env/bin/activate
           pip install -r dev_requirements.txt
-          pip install twine
-          pip install wheel setuptools
+          pip install twine wheel setuptools
           python setup.py sdist bdist_wheel
-          ls dist
           pip install dist/dbt-presto-*.tar.gz
-          echo here1!
           pip install dist/dbt_presto-*-py3-none-any.whl
-          echo here2!
           twine check dist/dbt_presto-*-py3-none-any.whl dist/dbt-presto-*.tar.gz
 
-  Release:
+  GitHubRelease:
+    name: GitHub release
     runs-on: ubuntu-latest
     needs: Test
     steps:
@@ -55,13 +52,6 @@ jobs:
           bumpversion --config-file .bumpversion.cfg patch --new-version ${{env.version_number}} --allow-dirty
           git status
 
-      - name: Release to pypi
-        run: |
-          pip install twine
-          pip install wheel setuptools
-          python setup.py sdist bdist_wheel
-          twine check dist/dbt_presto-${{env.version_number}}-py3-none-any.whl dist/dbt-presto-${{env.version_number}}.tar.gz
-  
       - name: Commit version bump and tag
         uses: EndBug/add-and-commit@v7
         with:
@@ -69,3 +59,27 @@ jobs:
           author_email: 'leah.antkiewicz@fishtownanalytics.com'
           message: 'Bumping version to ${{env.version_number}}'
           tag: v${{env.version_number}}
+          
+  PypiRelease:
+    name: Pypi release
+    runs-on: ubuntu-latest
+    needs: GitHubRelease
+    environment: PypiProd
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v2.2.2
+        with: 
+          python-version: '3.8'
+          
+      - uses: actions/checkout@v2
+        ref: v${{env.version_number}}
+      
+      - name: Release to pypi
+        run: |
+          python3 -m venv env
+          source env/bin/activate
+          pip install -r dev_requirements.txt
+          pip install twine wheel setuptools
+          python setup.py sdist bdist_wheel
+          twine check dist/dbt_presto-${{env.version_number}}-py3-none-any.whl dist/dbt-presto-${{env.version_number}}.tar.gz
+  
