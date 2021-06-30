@@ -7,7 +7,7 @@ on:
   
 # release version number that must be updated for each release
 env:
-  version_number: '0.20.1RC3'
+  version_number: '0.19.1'
 
 jobs:          
   Test:
