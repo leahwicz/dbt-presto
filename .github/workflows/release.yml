@@ -70,8 +70,8 @@ jobs:
           twine check dist/dbt_presto-${{env.version_number}}-py3-none-any.whl dist/dbt-presto-${{env.version_number}}.tar.gz
   
       - name: Tag release
-        uses: EndBug/add-and-commit@v7
-        with:
-          author_name: 'Leah Antkiewicz'
-          author_email: 'leah.antkiewicz@fishtownanalytics.com'
-          tag: 'v${{env.version_number}}'
+        run: |
+          git config user.name "Leah Antkiewicz"
+          git config user.email leah.antkiewicz@fishtownanalytics.com
+          git tag 'v${{env.version_number}}'
+          git push origin v${{env.version_number}}'
