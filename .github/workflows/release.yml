@@ -7,7 +7,7 @@ on:
   
 # release version number that must be updated for each release
 env:
-  version_number: '0.19.3'
+  version_number: '0.19.4'
 
 jobs:          
   Test:
@@ -55,13 +55,6 @@ jobs:
           bumpversion --config-file .bumpversion.cfg patch --new-version ${{env.version_number}} --allow-dirty
           git status
 
-      - name: Commit version bump
-        uses: EndBug/add-and-commit@v7
-        with:
-          author_name: 'Leah Antkiewicz'
-          author_email: 'leah.antkiewicz@fishtownanalytics.com'
-          message: 'Bumping version to ${{env.version_number}}'
-
       - name: Release to pypi
         run: |
           pip install twine
@@ -69,9 +62,10 @@ jobs:
           python setup.py sdist bdist_wheel
           twine check dist/dbt_presto-${{env.version_number}}-py3-none-any.whl dist/dbt-presto-${{env.version_number}}.tar.gz
   
-      - name: Tag release
-        run: |
-          git config user.name "Leah Antkiewicz"
-          git config user.email leah.antkiewicz@fishtownanalytics.com
-          git tag v${{env.version_number}}
-          git push origin v${{env.version_number}}
+      - name: Commit version bump and tag
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: 'Leah Antkiewicz'
+          author_email: 'leah.antkiewicz@fishtownanalytics.com'
+          message: 'Bumping version to ${{env.version_number}}'
+          tag: v${{env.version_number}}
