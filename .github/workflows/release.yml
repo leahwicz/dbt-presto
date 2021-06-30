@@ -7,7 +7,7 @@ on:
   
 # release version number that must be updated for each release
 env:
-  version_number: '0.19.8rc1'
+  version_number: '0.19.8rc2'
 
 jobs:          
   Test:
@@ -99,11 +99,14 @@ jobs:
           ref: v${{env.version_number}}
       
       - name: Release to pypi
+        env:
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
           python3 -m venv env
           source env/bin/activate
           pip install -r dev_requirements.txt
           pip install twine wheel setuptools
           python setup.py sdist bdist_wheel
-          twine check dist/dbt_presto-${{env.version_number}}-py3-none-any.whl dist/dbt-presto-${{env.version_number}}.tar.gz
+          twine upload --non-interactive dist/dbt_presto-${{env.version_number}}-py3-none-any.whl dist/dbt-presto-${{env.version_number}}.tar.gz
   
