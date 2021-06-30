@@ -27,9 +27,9 @@ def _dbt_presto_version():
 package_version = _dbt_presto_version()
 description = """The presto adpter plugin for dbt (data build tool)"""
 
-dbt_version = '0.19.7'
+dbt_version = '0.19.2'
 # the package version should be the dbt version, with maybe some things on the
-# ends of it. (0.19.7 vs 0.19.7a1, 0.19.7.1, ...)
+# ends of it. (0.19.2 vs 0.19.2a1, 0.19.2.1, ...)
 if not package_version.startswith(dbt_version):
     raise ValueError(
         f'Invalid setup.py: package_version={package_version} must start with '
