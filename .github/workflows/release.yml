@@ -56,6 +56,7 @@ jobs:
           pip install twine
           pip install wheel setuptools
           python setup.py sdist bdist_wheel
+          ls dist
           pip install dist/dbt_presto-${{env.version_number}}-py3-none-any.whl
           pip install dist/dbt-presto-${{env.version_number}}.tar.gz
           twine check dist/dbt_presto-${{env.version_number}}-py3-none-any.whl dist/dbt-presto-${{env.version_number}}.tar.gz
