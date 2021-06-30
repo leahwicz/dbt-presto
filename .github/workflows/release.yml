@@ -30,9 +30,9 @@ jobs:
 
       - name: Commit version bump
         uses: EndBug/add-and-commit@v7
-          with:
-            author_name: 'Leah Antkiewicz'
-            author_email: 'leah.antkiewicz@fishtownanalytics.com'
+        with:
+          author_name: 'Leah Antkiewicz'
+          author_email: 'leah.antkiewicz@fishtownanalytics.com'
           
   Build:
     runs-on: ubuntu-latest
